@@ -7,13 +7,16 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
 
+    [Header("Camera mode")]
+    public CameraMode cameraMode;
+
     [Header("Player move input")]
     public float verticalInput;
     public float horizontalInput;
     public float mouseX;
+    public bool jumb;
 
     [Header("Camera move input")]
-    [SerializeField] CameraMode cameraMode;
     public Vector2 mouseNomalizeDeltaFromCenter;
     public Vector2 mouseScrool;
 
@@ -23,12 +26,7 @@ public class InputManager : MonoBehaviour
         cameraMode = CameraMode.BackView_Follow;
     }
 
-    void Update()
-    {
-        ListenInput();
-    }
-
-    void ListenInput()
+    public void ListenInput()
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
@@ -46,21 +44,31 @@ public class InputManager : MonoBehaviour
             PlayerMoveInput_BackFollowMode();
             CameraMoveInput_BackFollowMode();
         }
-        
+        else if (cameraMode == CameraMode.MultiPerspective_Follow)
+        {
+            PlayerMoveInput_MultiPerspectiveFollowMode();
+            CameraMoveInput_MultiPerspectiveFollowMode();
+        }
     }
     void PlayerMoveInput_BackFollowMode()
     {
         verticalInput = Input.GetAxis("Vertical");
         horizontalInput = Input.GetAxis("Horizontal");
         mouseX = Input.GetAxis("Mouse X");
+        jumb = Input.GetKeyDown(KeyCode.Space);
+    }
+    void PlayerMoveInput_MultiPerspectiveFollowMode()
+    {
+        verticalInput = Input.GetAxis("Vertical");
+        horizontalInput = Input.GetAxis("Horizontal");
     }
     void CameraMoveInput_BackFollowMode()
     {
         mouseNomalizeDeltaFromCenter = new Vector2( (Input.mousePosition.x - Screen.width /2) / (Screen.width / 2), (Input.mousePosition.y - Screen.height / 2) / (Screen.height / 2));
         mouseScrool = Input.mouseScrollDelta * Time.deltaTime;
     }
-    void ChangeCameraMode(CameraMode _cameraMode)
+    void CameraMoveInput_MultiPerspectiveFollowMode()
     {
-        cameraMode = _cameraMode;
+
     }
 }

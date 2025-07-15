@@ -16,9 +16,10 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    public Player Player;
-    public CameraController CameraController;
-    public InputManager InputManager;
+    public GameStateMachine gameStateMachine;
+    public Player player;
+    public CameraController cameraController;
+    public InputManager inputManager;
 
     private void Start()
     {
@@ -27,8 +28,26 @@ public class GameManager : MonoBehaviour
 
     public void Init()
     {
-        Player.Init();
-        CameraController.Init();
-        InputManager = GetComponentInChildren<InputManager>();
+        gameStateMachine = GetComponentInChildren<GameStateMachine>();
+        gameStateMachine.Init();
+
+        inputManager = GetComponentInChildren<InputManager>();
+
+        player.Init();
+
+        cameraController.Init();
+    }
+
+    private void Update()
+    {
+        if (GameStateMachine.currentState == gameStateMachine.spawnPlayerState) 
+        {
+            return;
+        }
+        else
+        {
+            inputManager.ListenInput();
+            // player.playerMovement.PlayerMoveMent();
+        }
     }
 }
