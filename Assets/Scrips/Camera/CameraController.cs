@@ -1,16 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class CameraController : MonoBehaviour
 {
 
-    [Header("Inputmanaget")]
-    [SerializeField] InputManager InputManager;
+    #region instance
+    public static CameraController instance;
+    void OnEnable()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+    void OnDisable()
+    {
+        instance = null;
+    }
+    #endregion
 
-    [Header("Player")]
-    [SerializeField] Player Player;
+    [Header("Inputmanaget")]
+    [SerializeField] InputManager inputManager;
 
     [Header("Caculate camera tranform variable")]
     [SerializeField] GameObject playerHead; // Point to caculate camera position
@@ -46,10 +59,10 @@ public class CameraController : MonoBehaviour
 
     public void Init()
     {
-        InputManager = GameManager.Instance.GetComponentInChildren<InputManager>();
+        inputManager = GameManager.instance.GetComponentInChildren<InputManager>();
 
         playerHead = new GameObject("Player head");
-        playerHead.transform.position = Player.transform.position + playerHeadOffset;
+        playerHead.transform.position = Player.instance.transform.position + playerHeadOffset;
 
         playerLookPoint = new GameObject("PlayerLookPoint");
     }
@@ -66,7 +79,7 @@ public class CameraController : MonoBehaviour
     }
     void CaculateNewPosition()
     {
-        playerHead.transform.position = Player.transform.position + playerHeadOffset;
+        playerHead.transform.position = Player.instance.transform.position + playerHeadOffset;
 
         CaculateLookPointPosition();
         CaculateCameraDistance();
@@ -75,20 +88,19 @@ public class CameraController : MonoBehaviour
     }
     void CaculateLookPointPosition()
     {
-        playerLookPointOffset_y = InputManager.mouseNomalizeDeltaFromCenter.y;
+        playerLookPointOffset_y = inputManager.mouseNomalizeDeltaFromCenter.y;
         playerLookPointOffset = new Vector3(0f, playerLookPointOffset_y, 0f);
-        playerLookPoint.transform.position = playerHead.transform.position + Player.transform.forward + playerLookPointOffset;
+        playerLookPoint.transform.position = playerHead.transform.position + Player.instance.transform.forward + playerLookPointOffset;
     }
     void CaculateCameraDistance()
     {
-        if (distance <= minDistance && InputManager.mouseScrool.y < 0 || distance >= maxDistance && InputManager.mouseScrool.y > 0)
+        if (distance <= minDistance && inputManager.mouseScrool.y < 0 || distance >= maxDistance && inputManager.mouseScrool.y > 0)
         {
             return;
         }
         else
         {
-            distance += InputManager.mouseScrool.y * mouseScroolSensitivity;
+            distance += inputManager.mouseScrool.y * mouseScroolSensitivity;
         }
-        
     }
 }

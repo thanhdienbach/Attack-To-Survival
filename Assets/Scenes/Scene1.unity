@@ -272,8 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20362c570e9141b4f95e881632f655b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InputManager: {fileID: 0}
-  Player: {fileID: 1816987150}
+  inputManager: {fileID: 0}
   playerHead: {fileID: 0}
   playerHeadOffset: {x: 0, y: 0, z: 0}
   playerHeadOffset_y: 2
@@ -454,18 +453,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1816987150 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2934060973390147746, guid: 69610d643d5cdf44bae1d22ab6055494,
-    type: 3}
-  m_PrefabInstance: {fileID: 2068422295440941909}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a79ac7e4e4339141924ce7913c70920, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2068422295440941909
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -482,7 +469,7 @@ PrefabInstance:
     - target: {fileID: 2979263706599417226, guid: 69610d643d5cdf44bae1d22ab6055494,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.406
+      value: 0.057
       objectReference: {fileID: 0}
     - target: {fileID: 2979263706599417226, guid: 69610d643d5cdf44bae1d22ab6055494,
         type: 3}
@@ -528,26 +515,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Ellen
-      objectReference: {fileID: 0}
-    - target: {fileID: 5615936726147212425, guid: 69610d643d5cdf44bae1d22ab6055494,
-        type: 3}
-      propertyPath: m_Center.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6777008640808765356, guid: 69610d643d5cdf44bae1d22ab6055494,
-        type: 3}
-      propertyPath: gravity
-      value: -9.81
-      objectReference: {fileID: 0}
-    - target: {fileID: 6777008640808765356, guid: 69610d643d5cdf44bae1d22ab6055494,
-        type: 3}
-      propertyPath: jumpForce
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6777008640808765356, guid: 69610d643d5cdf44bae1d22ab6055494,
-        type: 3}
-      propertyPath: raycashDistance
-      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -682,21 +649,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7928570748317682791, guid: 6ded0e30eeb5faf4fb025da2a1089a06,
         type: 3}
-      propertyPath: Player
-      value: 
-      objectReference: {fileID: 1816987150}
-    - target: {fileID: 7928570748317682791, guid: 6ded0e30eeb5faf4fb025da2a1089a06,
-        type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 1816987150}
-    - target: {fileID: 7928570748317682791, guid: 6ded0e30eeb5faf4fb025da2a1089a06,
-        type: 3}
-      propertyPath: CameraController
-      value: 
-      objectReference: {fileID: 330585548}
-    - target: {fileID: 7928570748317682791, guid: 6ded0e30eeb5faf4fb025da2a1089a06,
-        type: 3}
       propertyPath: cameraController
       value: 
       objectReference: {fileID: 330585548}
@@ -705,7 +657,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5699128884210936273, guid: 6ded0e30eeb5faf4fb025da2a1089a06, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

@@ -14,7 +14,8 @@ public class InputManager : MonoBehaviour
     public float verticalInput;
     public float horizontalInput;
     public float mouseX;
-    public bool jumb;
+    public bool isLeftShiftHold;
+    public bool isJump;
 
     [Header("Camera move input")]
     public Vector2 mouseNomalizeDeltaFromCenter;
@@ -55,7 +56,8 @@ public class InputManager : MonoBehaviour
         verticalInput = Input.GetAxis("Vertical");
         horizontalInput = Input.GetAxis("Horizontal");
         mouseX = Input.GetAxis("Mouse X");
-        jumb = Input.GetKeyDown(KeyCode.Space);
+        isLeftShiftHold = Input.GetKey(KeyCode.LeftShift);
+        isJump = Input.GetKeyDown(KeyCode.Space);
     }
     void PlayerMoveInput_MultiPerspectiveFollowMode()
     {

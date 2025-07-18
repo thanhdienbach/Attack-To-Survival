@@ -15,6 +15,6 @@ MonoBehaviour:
   maxHealth: 100
   maxStamina: 100
   damage: 10
-  moveSpeed: 5
+  moveSpeed: 4
   teamID: 0
   creatureType: 0

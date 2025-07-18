@@ -13,6 +13,7 @@ public class Creature : MonoBehaviour
     public Move move;
     public CreatureID creatureID;
 
+
     public virtual void Init()
     {
         GetComponents();

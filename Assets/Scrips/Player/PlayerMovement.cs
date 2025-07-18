@@ -10,9 +10,22 @@ public class PlayerMovement : Move
     [Header("Compoment")]
     [SerializeField] InputManager inputManager;
     [SerializeField] CharacterController playerController;
+    [SerializeField] bool isGrounding;
+
+    [Header("Idle variable")]
+    public bool isIdling;
+    public bool isIdleRotation;
+    public float rotationSpeed;
 
     [Header("Walk variable")]
     [SerializeField] Vector3 direction;
+    public bool isWalking;
+    public float walkSpeedX;
+    public float walkSpeedY;
+    public float walkVelocity;
+
+    [Header("Run variable")]
+    public bool isRunning;
 
     [Header("Jump variable")]
     [SerializeField] GameObject groundCheck;
@@ -20,6 +33,7 @@ public class PlayerMovement : Move
     [SerializeField] LayerMask groundMask;
     [SerializeField] Vector3 velocity;
     [SerializeField] float jumpForce = 10f;
+    [SerializeField] bool isJumping;
     
 
 
@@ -30,65 +44,115 @@ public class PlayerMovement : Move
 
     public override void Init()
     {
-        inputManager = GameManager.Instance.GetComponentInChildren<InputManager>();
+        inputManager = GameManager.instance.GetComponentInChildren<InputManager>();
     }
 
-    void Update()
+    public void CheckChangeCondition()
     {
-        PlayerMoveMent();
-    }
+        walkSpeedX = inputManager.horizontalInput;
+        walkSpeedY = inputManager.verticalInput;
+        rotationSpeed = inputManager.mouseX;
 
-    public void PlayerMoveMent()
+        isIdling = walkSpeedX == 0 && walkSpeedY == 0;
+        isIdleRotation = isIdling && rotationSpeed != 0;
+        isWalking = walkSpeedX != 0 || walkSpeedY != 0;
+        isRunning = isWalking && inputManager.isLeftShiftHold;
+    }
+    //public void PlayerMoveMent()
+    //{
+    //    IsGround();
+
+    //    if (isGrounding)
+    //    {
+    //        if (inputManager.verticalInput != 0 || inputManager.horizontalInput != 0)
+    //        {
+    //            PlayerWalk();
+    //        }
+    //        else
+    //        {
+    //            isWalking = false;
+    //        }
+
+    //        if (inputManager.isJump)
+    //        {
+    //            PlayerJump();
+    //        }
+
+    //        PlayerRotation();
+    //    }
+
+    //    if (isJumping)
+    //    {
+    //        isWalking = false;
+    //        UnchangeDirectionMove();
+    //    }
+
+    //}
+    //void PlayerJump()
+    //{
+    //    if (inputManager.verticalInput >= 0)
+    //    {
+    //        velocity.y = jumpForce;
+    //    }
+    //    else
+    //    {
+    //        velocity.y = jumpForce / 2;
+    //    }
+
+    //    if (velocity.y < 0)
+    //    {
+    //        velocity.y = -1;
+    //    }
+
+    //    velocity.y += Physics.gravity.y * Time.deltaTime;
+
+    //    playerController.Move(velocity * Time.deltaTime);
+    //}
+    //public bool IsGround()
+    //{
+    //    if (Physics.Raycast(groundCheck.transform.position, Vector3.down, raycashDistance, groundMask))
+    //    {
+    //        isGrounding = true;
+    //        isJumping = false ;
+    //    }
+    //    else
+    //    {
+    //        isGrounding = false;
+    //        isJumping = true;
+    //    }
+    //    Debug.DrawRay(groundCheck.transform.position, Vector3.down, Color.green, raycashDistance);
+    //    return isGrounding;
+    //}
+    //void UnchangeDirectionMove()
+    //{
+    //    playerController.Move(direction * moveSpeed * Time.deltaTime);
+    //}
+    public void PlayerMove()
     {
-        PlayerJump();
-        if (IsGround())
+        if (inputManager.isLeftShiftHold)
         {
-            PlayerWalk();
-            PlayerRotation();
+            walkSpeedX = inputManager.horizontalInput * 2;
+            walkSpeedY = inputManager.verticalInput * 2;
+            direction = (transform.right * walkSpeedX + transform.forward * walkSpeedY);
         }
         else
         {
-            UnchangeDirectionMove();
+            walkSpeedX = inputManager.horizontalInput;
+            walkSpeedY = inputManager.verticalInput;
+            direction = (transform.right * walkSpeedX + transform.forward * walkSpeedY);
         }
-    }
-    void PlayerJump()
-    {
-        if (IsGround() && velocity.y < 0)
+        if (walkVelocity <= 2)
         {
-            velocity.y = -1;
+            walkVelocity = direction.magnitude;
         }
-        
-        if (IsGround() && inputManager.jumb)
+        else
         {
-            if (inputManager.verticalInput >= 0)
-            {
-                velocity.y = jumpForce;
-            }
-            else
-            {
-                velocity.y =  jumpForce / 2;
-            }
+            walkVelocity = 2f;
         }
-
-        velocity.y += Physics.gravity.y * Time.deltaTime;
-
-        playerController.Move(velocity * Time.deltaTime);
-    }
-    public bool IsGround()
-    {
-        return Physics.Raycast(groundCheck.transform.position, Vector3.down, raycashDistance, groundMask);
-    }
-    void UnchangeDirectionMove()
-    {
         playerController.Move(direction * moveSpeed * Time.deltaTime);
     }
-    void PlayerWalk()
+    public void PlayerRotation()
     {
-        direction = (transform.right * inputManager.horizontalInput +  transform.forward * inputManager.verticalInput);
-        playerController.Move(direction * moveSpeed * Time.deltaTime);
-    }
-    void PlayerRotation()
-    {
-        transform.Rotate(Vector3.up * inputManager.mouseX);
+        transform.Rotate(Vector3.up * rotationSpeed);
     }
 }

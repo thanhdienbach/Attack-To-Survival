@@ -5,21 +5,26 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    #region Instance
-    public static GameManager Instance;
+    #region instance
+    public static GameManager instance;
     private void OnEnable()
     {
-        if (Instance == null)
+        if (instance == null)
         {
-            Instance = this;
+            instance = this;
         }
+    }
+    private void OnDisable()
+    {
+        instance = null;
     }
     #endregion
 
-    public GameStateMachine gameStateMachine;
-    public Player player;
-    public CameraController cameraController;
+
     public InputManager inputManager;
+    public CameraController cameraController;
+    public GameStateManager gameStateManager;
+
 
     private void Start()
     {
@@ -28,26 +33,14 @@ public class GameManager : MonoBehaviour
 
     public void Init()
     {
-        gameStateMachine = GetComponentInChildren<GameStateMachine>();
-        gameStateMachine.Init();
-
         inputManager = GetComponentInChildren<InputManager>();
 
-        player.Init();
+        Player.instance.Init();
 
-        cameraController.Init();
-    }
+        CameraController.instance.Init();
 
-    private void Update()
-    {
-        if (GameStateMachine.currentState == gameStateMachine.spawnPlayerState) 
-        {
-            return;
-        }
-        else
-        {
-            inputManager.ListenInput();
-            // player.playerMovement.PlayerMoveMent();
-        }
+        gameStateManager = gameObject.AddComponent<GameStateManager>();
+        gameStateManager.Init();
+
     }
 }
