@@ -16,6 +16,7 @@ public class GameState_Playing : IState
     public void OnEnter()
     {
         Debug.Log("Game playing: Enter");
+        GameManager.instance.spawnEnemyManager.SpawnWild();
     }
     public void OnUpdate()
     {

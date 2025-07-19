@@ -24,6 +24,7 @@ public class Creature : MonoBehaviour
         health = GetComponent<Health>();
         stamina = GetComponent<Stamina>();
         attack = GetComponent<Attack>();
+        attack.Init();
         move = GetComponent<Move>();
         move.Init();
         creatureID = GetComponent<CreatureID>();

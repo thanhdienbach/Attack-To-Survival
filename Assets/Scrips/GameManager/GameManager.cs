@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public InputManager inputManager;
     public CameraController cameraController;
     public GameStateManager gameStateManager;
+    public SpawnEnemyManager spawnEnemyManager;
 
 
     private void Start()
@@ -39,8 +40,10 @@ public class GameManager : MonoBehaviour
 
         CameraController.instance.Init();
 
+        spawnEnemyManager = GetComponentInChildren<SpawnEnemyManager>();
+        spawnEnemyManager.Init();
+
         gameStateManager = gameObject.AddComponent<GameStateManager>();
         gameStateManager.Init();
-
     }
 }

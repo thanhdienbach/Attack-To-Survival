@@ -19,6 +19,7 @@ public class PlayerState_Walk : IState
     }
     public void OnUpdate()
     {
+        Debug.Log("Walk state: Update");
         Player.instance.playerMovement.PlayerMove();
         Player.instance.playerMovement.PlayerRotation();
         Player.instance.animationControl.WalkAnimation();

@@ -51,5 +51,9 @@ public class AnimationControl : MonoBehaviour
         // animator.SetFloat(walkVelocityHash, playerMovement.walkVelocity);
         animator.SetFloat(walkVHash, playerMovement.walkVelocity);
     }
+    public void JumpAnimation()
+    {
+        animator.SetBool(isJumpingHash, playerMovement.isJump);
+    }
 
 }

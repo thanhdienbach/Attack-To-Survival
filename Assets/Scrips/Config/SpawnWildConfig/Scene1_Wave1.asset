@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e486c1c4e45bb4a40ac9cd1216fa2ff3, type: 3}
+  m_Name: Scene1_Wave1
+  m_EditorClassIdentifier: 
+  wilds:
+  - {fileID: 345409486997853481, guid: f0368e2d17d614041be3346b347ad754, type: 3}
+  - {fileID: 5618135585910888000, guid: 4f105839cb436ee428c2966622c5699e, type: 3}
+  - {fileID: 345409486997853481, guid: f0368e2d17d614041be3346b347ad754, type: 3}
+  - {fileID: 5618135585910888000, guid: 4f105839cb436ee428c2966622c5699e, type: 3}
+  count: 02000000020000000200000002000000

@@ -9,6 +9,8 @@ public class PlayerStateManager : MonoBehaviour
 
     public PlayerState_Idle playerState_Idle;
     public PlayerState_Walk playerState_Walk;
+    public PlayerState_Jump playerState_Jump;
+    public PlayerState_Attack playerState_Attack;
 
 
     public void Init()
@@ -17,6 +19,8 @@ public class PlayerStateManager : MonoBehaviour
 
         playerState_Idle = new PlayerState_Idle(stateMachine);
         playerState_Walk = new PlayerState_Walk(stateMachine);
+        playerState_Jump = new PlayerState_Jump(stateMachine);
+        playerState_Attack = new PlayerState_Attack(stateMachine);
 
         ChangeState(playerState_Idle);
     }
