@@ -20,3 +20,11 @@ public enum CameraMode
     BackView_Follow,
     MultiPerspective_Follow
 }
+
+public enum WildState
+{
+    Idle,
+    Potral,
+    Attack,
+    Die
+}

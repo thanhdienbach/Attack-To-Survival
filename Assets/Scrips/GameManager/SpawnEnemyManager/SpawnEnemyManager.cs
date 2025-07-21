@@ -23,7 +23,7 @@ public class SpawnEnemyManager : MonoBehaviour
     
     public void Init()
     {
-        spawnPositions = GetComponentsInChildren<Transform>();
+        spawnPositions = GetComponentsInChildren<Transform>(true);
         maxWave = spawnWildConfigs.Count;
     }
 

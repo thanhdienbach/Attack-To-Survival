@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb2bc7e3cc1717047a44bc3cf0f3c7a3, type: 3}
-  m_Name: PinkSister
+  m_Name: Chomper
   m_EditorClassIdentifier: 
   maxHealth: 10
   maxStamina: 10

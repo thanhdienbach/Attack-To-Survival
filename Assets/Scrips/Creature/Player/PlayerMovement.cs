@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : Move
@@ -33,7 +35,8 @@ public class PlayerMovement : Move
     public bool isJumping;
     public bool forced;
 
-
+    [Header("Attack by staff variable / Combo config")]
+    public bool attack;
 
     private void Awake()
     {
@@ -60,6 +63,8 @@ public class PlayerMovement : Move
         isRunning = isWalking && inputManager.isLeftShiftHold;
 
         isJump = isGrounding && inputManager.isJump;
+
+        attack = isGrounding && inputManager.attack;
 
         Gravity();
     }
@@ -136,4 +141,5 @@ public class PlayerMovement : Move
     {
         isJumping = false;
     }
+
 }

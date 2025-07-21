@@ -39,9 +39,12 @@ public class Player : Creature
     public void ListenAction()
     {
         playerMovement.CheckMoveCondition();
-        Debug.Log(playerMovement.isGrounding);
 
-        if (playerMovement.isJump)
+        if (playerMovement.attack)
+        {
+            stateManager.ChangeState(stateManager.playerState_Attack);
+        }
+        else if (playerMovement.isJump)
         {
             stateManager.ChangeState(stateManager.playerState_Jump);
         }

@@ -16,6 +16,7 @@ public class InputManager : MonoBehaviour
     public float mouseX;
     public bool isLeftShiftHold;
     public bool isJump;
+    public bool attack;
 
     [Header("Camera move input")]
     public Vector2 mouseNomalizeDeltaFromCenter;
@@ -53,11 +54,21 @@ public class InputManager : MonoBehaviour
     }
     void PlayerMoveInput_BackFollowMode()
     {
+        // Move
         verticalInput = Input.GetAxis("Vertical");
         horizontalInput = Input.GetAxis("Horizontal");
+
+        // Rotation
         mouseX = Input.GetAxis("Mouse X");
+
+        // Run
         isLeftShiftHold = Input.GetKey(KeyCode.LeftShift);
+
+        // Jump
         isJump = Input.GetKeyDown(KeyCode.Space);
+
+        // Attack
+        attack = Input.GetMouseButtonDown(0);
     }
     void PlayerMoveInput_MultiPerspectiveFollowMode()
     {

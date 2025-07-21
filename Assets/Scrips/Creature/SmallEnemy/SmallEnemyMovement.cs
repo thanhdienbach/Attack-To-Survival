@@ -1,55 +1,89 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+﻿using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class SmallEnemyMovement : Move
 {
 
     [Header("Component")]
     [SerializeField] SmallCreature smallCreature;
+    public NavMeshAgent agent;
+    public WildState smallEnemyState;
+    [SerializeField] Animator animator;
+
+    [Header("Idle variable")]
+    public bool isIdle;
+    public string idleString = "ChomperIdle";
 
     [Header("Patrol variable")]
-    [SerializeField] Transform paltrolPlace;
-    [SerializeField] float paltrolDistance = 20.0f;
-    public float randomDistance;
-    
+    public bool isPatrol;
+    public string isPatrolString = "ChomperWalkForward";
+    [SerializeField] float wanderRadius = 20f;
+
     void Start()
     {
-        smallCreature = GetComponent<SmallCreature>();
-        
-        
+        agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+        smallEnemyState = WildState.Idle;
     }
 
     void Update()
     {
-        StartCoroutine(Patrol());
-    }
-
-    IEnumerator Patrol()
-    {
-        Vector3 destination = RandomMove();
-        yield return new WaitForSeconds(5f);
-        transform.position = Vector3.Lerp(transform.position, destination, 1);
-    }
-
-    void Idle()
-    {
 
     }
-    Vector3 RandomMove()
+
+    #region Setstate
+    public void IsIdle()
     {
-        Vector3 destination = new Vector3();
-        if (Vector3.Distance(transform.position, paltrolPlace.position) > paltrolDistance)
+        smallEnemyState = WildState.Idle;
+        animator.Play(idleString);
+    }
+    public void IsPotral()
+    {
+        smallEnemyState = WildState.Potral;
+        animator.Play(isPatrolString);
+    }
+    public void IsAttack()
+    {
+        smallEnemyState = WildState.Attack;
+    }
+    public void IsDie()
+    {
+        smallEnemyState = WildState.Die;
+    }
+    #endregion
+
+    public void Move()
+    {
+        Vector3 newDestination = GetRandomNavMeshPosition(transform.position, wanderRadius);
+        agent.SetDestination(newDestination);
+    }
+    Vector3 GetRandomNavMeshPosition(Vector3 center, float radius)
+    {
+        for (int i = 0; i < 4; i++)
         {
-            destination = paltrolPlace.position;
+            Vector3 randomDirection = Random.insideUnitSphere * radius;
+            randomDirection += center;
+            randomDirection.y = center.y;
+
+            if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, radius, NavMesh.AllAreas))
+            {
+                return hit.position;
+            }
         }
-        else
+        return center;
+    }
+
+    public bool Arrived()
+    {
+        if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
         {
-            randomDistance = UnityEngine.Random.Range(-10, 10);
-            destination = new Vector3(randomDistance, 0, randomDistance);
+            if (!agent.hasPath || agent.velocity.sqrMagnitude == 0)
+            {
+                return true;
+            }
         }
-        return destination;
+        
+        return false;
     }
 }

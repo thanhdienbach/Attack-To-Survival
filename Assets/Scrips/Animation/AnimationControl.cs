@@ -25,16 +25,18 @@ public class AnimationControl : MonoBehaviour
     [Header("Jumb variable")]
     [SerializeField] int isJumpingHash = Animator.StringToHash("isJumping");
 
+    [Header("Attack by staff variable / Combo config")]
+    [SerializeField] Queue<string> attackQueue = new Queue<string>();
+    [SerializeField] bool isAttacking = false;
+    [SerializeField] readonly string[] comboSequence = new string[] { "Combo1", "Combo2", "Combo3", "Combo4" };
+    [SerializeField] int currentComboIndex = 0;
+    [SerializeField] int maxComboCount = 4;
+    
+
     void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
         animator = GetComponent<Animator>();
-    }
-
-    
-    void LateUpdate()
-    {
-        // WalkAnimation();
     }
 
     public void IdleAnimation()
@@ -54,6 +56,34 @@ public class AnimationControl : MonoBehaviour
     public void JumpAnimation()
     {
         animator.SetBool(isJumpingHash, playerMovement.isJump);
+    }
+
+    public void EnqueueAttack()
+    {
+        if (attackQueue.Count < maxComboCount)
+        {
+            attackQueue.Enqueue(comboSequence[currentComboIndex]);
+            currentComboIndex = (currentComboIndex + 1) % comboSequence.Length;
+
+            if (!isAttacking)
+            {
+                StartCoroutine(ProcessCombo());
+            }
+        }
+    }
+    IEnumerator ProcessCombo()
+    {
+        isAttacking = true;
+
+        while (attackQueue.Count > 0)
+        {
+            string currentAttack = attackQueue.Dequeue();
+            animator.Play(currentAttack);
+            yield return new WaitForSeconds(0.8f);
+        }
+
+        isAttacking = false;
+        currentComboIndex = 0;
     }
 
 }

@@ -2,23 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerState_Attack : IState
+public class WildState_Attack : IState
 {
-    
-    private MyStateMachine stateMachine;
+    [SerializeField] MyStateMachine stateMachine;
+    public SmallEnemyMovement smallEnemyMovement;
 
-    public PlayerState_Attack(MyStateMachine _stateMachine)
+    public WildState_Attack(MyStateMachine _stateMachine)
     {
         stateMachine = _stateMachine;
     }
 
     public void OnEnter()
     {
-
+        
     }
     public void OnUpdate()
     {
-        Player.instance.animationControl.EnqueueAttack();
+        
     }
     public void OnExit()
     {

@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
 
         CameraController.instance.Init();
 
-        spawnEnemyManager = GetComponentInChildren<SpawnEnemyManager>();
+        spawnEnemyManager = GetComponentInChildren<SpawnEnemyManager>(true);
         spawnEnemyManager.Init();
 
         gameStateManager = gameObject.AddComponent<GameStateManager>();
