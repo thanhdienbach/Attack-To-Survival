@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MyStateMachine
 {
-    private IState currentState;
+    public IState currentState;
 
     public void UpDate()
     {

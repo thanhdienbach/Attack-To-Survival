@@ -28,3 +28,10 @@ public enum WildState
     Attack,
     Die
 }
+
+public enum HitLayerOfCamera
+{
+    Player,
+    Wild,
+    Obstacal
+}

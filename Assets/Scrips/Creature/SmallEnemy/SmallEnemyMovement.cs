@@ -1,4 +1,5 @@
 ﻿using Unity.Burst.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -19,6 +20,10 @@ public class SmallEnemyMovement : Move
     public bool isPatrol;
     public string isPatrolString = "ChomperWalkForward";
     [SerializeField] float wanderRadius = 20f;
+
+    [Header("Attack variable")]
+    public bool isAttack;
+    public string isAttackString = "ChomperAttack";
 
     void Start()
     {
@@ -45,7 +50,7 @@ public class SmallEnemyMovement : Move
     }
     public void IsAttack()
     {
-        smallEnemyState = WildState.Attack;
+        animator.Play(isAttackString);
     }
     public void IsDie()
     {
@@ -53,7 +58,7 @@ public class SmallEnemyMovement : Move
     }
     #endregion
 
-    public void Move()
+    public void Potral()
     {
         Vector3 newDestination = GetRandomNavMeshPosition(transform.position, wanderRadius);
         agent.SetDestination(newDestination);
@@ -73,7 +78,6 @@ public class SmallEnemyMovement : Move
         }
         return center;
     }
-
     public bool Arrived()
     {
         if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
@@ -85,5 +89,19 @@ public class SmallEnemyMovement : Move
         }
         
         return false;
+    }
+
+    public void Attack()
+    {
+        transform.LookAt(Player.instance.transform.position);
+        if (Vector3.Distance(transform.position, Player.instance.transform.position) > 0.1)
+        {
+            agent.SetDestination(Player.instance.transform.position);
+            animator.Play(isPatrolString);
+        }
+        else
+        {
+            animator.Play(isAttackString);
+        }
     }
 }

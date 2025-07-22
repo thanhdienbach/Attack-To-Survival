@@ -12,5 +12,4 @@ public class CreatureConfig : ScriptableObject
     public float moveSpeed;
     public TeamID teamID;
     public CreatureType creatureType;
-
 }

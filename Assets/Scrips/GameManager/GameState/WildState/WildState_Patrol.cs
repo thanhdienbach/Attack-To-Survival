@@ -14,7 +14,7 @@ public class WildState_Patrol : IState
 
     public void OnEnter()
     {
-        smallEnemyMovement.Move();
+        smallEnemyMovement.Potral();
     }
     public void OnUpdate()
     {

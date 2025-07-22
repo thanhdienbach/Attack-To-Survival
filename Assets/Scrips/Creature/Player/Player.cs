@@ -23,6 +23,7 @@ public class Player : Creature
 
     public PlayerMovement playerMovement;
     public PlayerAttack playerAttack;
+    public Staff staff;
     public AnimationControl animationControl;
     public PlayerStateManager stateManager;
 
@@ -32,6 +33,7 @@ public class Player : Creature
         playerMovement = GetComponent<PlayerMovement>();
         animationControl = GetComponent<AnimationControl>();
         playerAttack = GetComponent<PlayerAttack>();
+        staff = GetComponentInChildren<Staff>();
         stateManager = GetComponent<PlayerStateManager>();
         stateManager.Init();
     }
@@ -56,6 +58,14 @@ public class Player : Creature
         {
             stateManager.ChangeState(stateManager.playerState_Walk);
         }
-        
+    }
+
+    public void SetStaffCanAttack()
+    {
+        staff.SetColliderTrue();
+    }
+    public void SetStaffCantAttack()
+    {
+        staff.SetColliderFalse();
     }
 }

@@ -7,6 +7,7 @@ public class SmallCreature : Creature
 
     [SerializeField] WildStateManager wildStateManager;
     [SerializeField] SmallEnemyMovement smallEnemyMovement;
+    [SerializeField] SmallCreatureHealth smallCreatureHealth;
 
     private void OnEnable()
     {
@@ -17,6 +18,7 @@ public class SmallCreature : Creature
         base.Init();
         wildStateManager = GetComponent<WildStateManager>();
         smallEnemyMovement = GetComponent<SmallEnemyMovement>();
+        smallCreatureHealth = GetComponent<SmallCreatureHealth>();
     }
 
     void Start()
@@ -26,7 +28,11 @@ public class SmallCreature : Creature
 
     void Update()
     {
-        if (smallEnemyMovement.smallEnemyState == WildState.Potral)
+        if (smallCreatureHealth.attacked)
+        {
+            wildStateManager.Changestate(wildStateManager.wildState_Attack);
+        }
+        else if (smallEnemyMovement.smallEnemyState == WildState.Potral)
         {
             wildStateManager.Changestate(wildStateManager.wildState_Patrol);
         }
@@ -36,5 +42,4 @@ public class SmallCreature : Creature
         }
     }
 
-    
 }

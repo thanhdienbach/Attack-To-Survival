@@ -14,11 +14,12 @@ public class WildState_Attack : IState
 
     public void OnEnter()
     {
-        
+        smallEnemyMovement.agent.isStopped = true;
+        smallEnemyMovement.IsAttack();
     }
     public void OnUpdate()
     {
-        
+        smallEnemyMovement.Attack();
     }
     public void OnExit()
     {

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerStateManager : MonoBehaviour
 {
 
-    private MyStateMachine stateMachine;
+    public MyStateMachine stateMachine;
 
     public PlayerState_Idle playerState_Idle;
     public PlayerState_Walk playerState_Walk;

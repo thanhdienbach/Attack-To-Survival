@@ -19,16 +19,17 @@ public class AnimationControl : MonoBehaviour
     [SerializeField] int isWalkingHash = Animator.StringToHash("isWalking");
     [SerializeField] int walkSpeedXHash = Animator.StringToHash("walkSpeedX");
     [SerializeField] int walkSpeedYHash = Animator.StringToHash("walkSpeedY");
-    [SerializeField] int walkVelocityHash = Animator.StringToHash("walkVelocity");
     [SerializeField] int walkVHash = Animator.StringToHash("walkV");
 
     [Header("Jumb variable")]
     [SerializeField] int isJumpingHash = Animator.StringToHash("isJumping");
 
     [Header("Attack by staff variable / Combo config")]
+    [SerializeField] int isAttackHash = Animator.StringToHash("isAttacking");
     [SerializeField] Queue<string> attackQueue = new Queue<string>();
-    [SerializeField] bool isAttacking = false;
+    public bool isAttacking = false;
     [SerializeField] readonly string[] comboSequence = new string[] { "Combo1", "Combo2", "Combo3", "Combo4" };
+    [SerializeField] float[] animationTime = new float[4] { 2.0f, 1.5f, 1.6f, 2.0f };
     [SerializeField] int currentComboIndex = 0;
     [SerializeField] int maxComboCount = 4;
     
@@ -50,7 +51,6 @@ public class AnimationControl : MonoBehaviour
         animator.SetBool(isWalkingHash, playerMovement.isWalking);
         animator.SetFloat(walkSpeedXHash, playerMovement.walkSpeedX);
         animator.SetFloat(walkSpeedYHash, playerMovement.walkSpeedY);
-        // animator.SetFloat(walkVelocityHash, playerMovement.walkVelocity);
         animator.SetFloat(walkVHash, playerMovement.walkVelocity);
     }
     public void JumpAnimation()
@@ -74,15 +74,26 @@ public class AnimationControl : MonoBehaviour
     IEnumerator ProcessCombo()
     {
         isAttacking = true;
+        animator.SetBool(isAttackHash, isAttacking);
+        int animationIndex;
 
         while (attackQueue.Count > 0)
         {
             string currentAttack = attackQueue.Dequeue();
             animator.Play(currentAttack);
-            yield return new WaitForSeconds(0.8f);
+            
+            for (int i = 0; i < comboSequence.Length; i++)
+            {
+                if (currentAttack == comboSequence[i])
+                {
+                    animationIndex = i;
+                    yield return new WaitForSeconds(animationTime[animationIndex]);
+                }
+            }
         }
 
         isAttacking = false;
+        animator.SetBool(isAttackHash, isAttacking);
         currentComboIndex = 0;
     }
 
