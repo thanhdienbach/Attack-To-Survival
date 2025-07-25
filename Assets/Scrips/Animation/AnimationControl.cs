@@ -9,6 +9,7 @@ public class AnimationControl : MonoBehaviour
     [Header("Component")]
     [SerializeField] PlayerMovement playerMovement;
     [SerializeField] Animator animator;
+    [SerializeField] InputManager inputManager;
 
     [Header("Idle variable")]
     [SerializeField] int isIdlingHash = Animator.StringToHash("isIdling");
@@ -29,22 +30,26 @@ public class AnimationControl : MonoBehaviour
     [SerializeField] Queue<string> attackQueue = new Queue<string>();
     public bool isAttacking = false;
     [SerializeField] readonly string[] comboSequence = new string[] { "Combo1", "Combo2", "Combo3", "Combo4" };
-    [SerializeField] float[] animationTime = new float[4] { 2.0f, 1.5f, 1.6f, 2.0f };
+    [SerializeField] float[] animationTime = new float[4] { 1.9f, 1.2f, 1.3f, 1.2f };
+    [SerializeField] bool isFirstTime;
     [SerializeField] int currentComboIndex = 0;
     [SerializeField] int maxComboCount = 4;
     
 
-    void Start()
+    public void Init()
     {
         playerMovement = GetComponent<PlayerMovement>();
         animator = GetComponent<Animator>();
+        inputManager = GameManager.instance.inputManager;
     }
 
+    public void CancleAllAnimation()
+    {
+
+    }
     public void IdleAnimation()
     {
         animator.SetBool(isIdlingHash, playerMovement.isIdling);
-        //animator.SetBool(isIdleRotationHash, playerMovement.isIdleRotation);
-        //animator.SetFloat(rotationSpeedHash, playerMovement.rotationSpeed);
     }
     public void WalkAnimation()
     {
@@ -55,23 +60,30 @@ public class AnimationControl : MonoBehaviour
     }
     public void JumpAnimation()
     {
-        animator.SetBool(isJumpingHash, playerMovement.isJump);
+        animator.SetBool(isJumpingHash, playerMovement.isJumping);
     }
 
     public void EnqueueAttack()
     {
-        if (attackQueue.Count < maxComboCount)
+        Debug.Log("Log1");
+        if (attackQueue.Count < maxComboCount && inputManager.attack)
         {
+            Debug.Log("Log2");
             attackQueue.Enqueue(comboSequence[currentComboIndex]);
             currentComboIndex = (currentComboIndex + 1) % comboSequence.Length;
 
             if (!isAttacking)
             {
+                Debug.Log("Call");
                 StartCoroutine(ProcessCombo());
             }
         }
     }
-    IEnumerator ProcessCombo()
+    public void EnQueue()
+    {
+
+    }
+    public IEnumerator ProcessCombo()
     {
         isAttacking = true;
         animator.SetBool(isAttackHash, isAttacking);
@@ -79,6 +91,7 @@ public class AnimationControl : MonoBehaviour
 
         while (attackQueue.Count > 0)
         {
+            Debug.Log(attackQueue.Count);
             string currentAttack = attackQueue.Dequeue();
             animator.Play(currentAttack);
             
@@ -96,5 +109,6 @@ public class AnimationControl : MonoBehaviour
         animator.SetBool(isAttackHash, isAttacking);
         currentComboIndex = 0;
     }
+    
 
 }

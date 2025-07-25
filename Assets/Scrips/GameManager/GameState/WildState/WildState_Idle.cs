@@ -22,7 +22,7 @@ public class WildState_Idle : IState
     }
     public void OnUpdate()
     {
-        Debug.Log("Idle");
+        // Debug.Log("Idle");
     }
     public void OnExit()
     {

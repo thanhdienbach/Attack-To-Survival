@@ -45,35 +45,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: ffae9263bd1a66245bd2bad16f271364, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 100024, guid: ffae9263bd1a66245bd2bad16f271364, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 100026, guid: ffae9263bd1a66245bd2bad16f271364, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 100028, guid: ffae9263bd1a66245bd2bad16f271364, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 100030, guid: ffae9263bd1a66245bd2bad16f271364, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 100032, guid: ffae9263bd1a66245bd2bad16f271364, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 100038, guid: ffae9263bd1a66245bd2bad16f271364, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 100042, guid: ffae9263bd1a66245bd2bad16f271364, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ffae9263bd1a66245bd2bad16f271364, type: 3}
       propertyPath: m_LocalScale.x
@@ -181,8 +181,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.11901872, y: 0.058250878, z: 1.4122771}
-  m_Center: {x: -0.0015124892, y: 0.0056899507, z: 0.31339642}
+  m_Size: {x: 0.23369303, y: 0.15958898, z: 1.7537038}
+  m_Center: {x: -0.008282025, y: 0.005678434, z: 0.48410982}
 --- !u!1001 &2979263706599554732
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1643,6 +1643,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   curentHealth: 0
+  attacked: 0
 --- !u!114 &1777921223319751224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1669,7 +1670,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f9936dd02d42e7419feba15fe5258c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapons: []
   damage: 0
 --- !u!114 &884695718702718089
 MonoBehaviour:
@@ -1709,7 +1709,7 @@ MonoBehaviour:
   walkVelocity: 0
   isRunning: 0
   groundCheck: {fileID: 1293739139791736844}
-  raycashDistance: 0.1
+  raycashDistance: 0.5
   groundMask:
     serializedVersion: 2
     m_Bits: 384

@@ -20,10 +20,11 @@ public class PlayerState_Idle : IState
     public void OnUpdate()
     {
         Player.instance.animationControl.IdleAnimation();
-        Player.instance.playerMovement.PlayerRotation();
+        Debug.Log("Idle");
     }
     public void OnExit()
     {
+        Player.instance.playerMovement.isIdling = false;
         Player.instance.animationControl.IdleAnimation();
     }
 }

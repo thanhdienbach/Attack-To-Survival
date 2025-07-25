@@ -27,16 +27,13 @@ public class PlayerMovement : Move
 
     [Header("Jump variable")]
     [SerializeField] GameObject groundCheck;
-    [SerializeField] float raycashDistance = 0.1f;
+    [SerializeField] float raycashDistance = 0.5f;
     [SerializeField] LayerMask groundMask;
     [SerializeField] Vector3 velocity;
     [SerializeField] float jumpForce = 10f;
     public bool isJump;
     public bool isJumping;
     public bool forced;
-
-    [Header("Attack by staff variable / Combo config")]
-    public bool attack;
 
     private void Awake()
     {
@@ -48,29 +45,28 @@ public class PlayerMovement : Move
         inputManager = GameManager.instance.GetComponentInChildren<InputManager>();
     }
 
-    public void CheckMoveCondition()
+    public void CheckGroundAndAddGravity()
     {
-        walkSpeedX = inputManager.horizontalInput;
-        walkSpeedY = inputManager.verticalInput;
-        rotationSpeed = inputManager.mouseX;
 
         isGrounding = IsGround();
 
-        isIdling = walkSpeedX == 0 && walkSpeedY == 0 && isGrounding;
-        isIdleRotation = isIdling && rotationSpeed != 0;
-
-        isWalking = (walkSpeedX != 0 || walkSpeedY != 0) && isGrounding;
-        isRunning = isWalking && inputManager.isLeftShiftHold;
-
-        isJump = isGrounding && inputManager.isJump;
-
-        attack = isGrounding && inputManager.attack;
-
         Gravity();
     }
+
+    public void ChecMoveCondition()
+    {
+        rotationSpeed = inputManager.mouseX;
+        isWalking = isGrounding && inputManager.verticalInput != 0 || inputManager.horizontalInput != 0;
+        isIdling = isGrounding && inputManager.verticalInput == 0 || inputManager.horizontalInput == 0;
+    }
+
     void Gravity()
     {
         velocity.y += Physics.gravity.y * Time.deltaTime;
+        if (velocity.y < 0 && isGrounding)
+        {
+            velocity.y = -1;
+        }
         playerController.Move(velocity * Time.deltaTime);
     }
     public void PlayerJump()
@@ -140,6 +136,11 @@ public class PlayerMovement : Move
     public void EndedJump()
     {
         isJumping = false;
+    }
+    public void ResetWalkVariable()
+    {
+        walkSpeedX = walkSpeedY = walkVelocity = 0;
+        isWalking = false;
     }
 
 }

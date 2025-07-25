@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
@@ -21,6 +23,7 @@ public class Player : Creature
     }
     #endregion
 
+    public InputManager inputManager;
     public PlayerMovement playerMovement;
     public PlayerAttack playerAttack;
     public Staff staff;
@@ -30,34 +33,47 @@ public class Player : Creature
     public override void Init()
     {
         base.Init();
-        playerMovement = GetComponent<PlayerMovement>();
-        animationControl = GetComponent<AnimationControl>();
-        playerAttack = GetComponent<PlayerAttack>();
-        staff = GetComponentInChildren<Staff>();
+        inputManager = GameManager.instance.inputManager;
         stateManager = GetComponent<PlayerStateManager>();
         stateManager.Init();
+        playerMovement = GetComponent<PlayerMovement>();
+        animationControl = GetComponent<AnimationControl>();
+        animationControl.Init();
+        playerAttack = GetComponent<PlayerAttack>();
+        staff = GetComponentInChildren<Staff>();
     }
 
     public void ListenAction()
     {
-        playerMovement.CheckMoveCondition();
+        playerMovement.CheckGroundAndAddGravity();
 
-        if (playerMovement.attack)
+        if (inputManager.attack && !playerMovement.isJumping)
         {
             stateManager.ChangeState(stateManager.playerState_Attack);
         }
-        else if (playerMovement.isJump)
+        else if (inputManager.isJump && !animationControl.isAttacking)
         {
             stateManager.ChangeState(stateManager.playerState_Jump);
+        }
+
+        if (playerMovement.isGrounding)
+        {
+            playerMovement.ChecMoveCondition();
+        }
+        if (playerMovement.isJumping || animationControl.isAttacking)
+        {
+            return;
+        }
+
+        if (playerMovement.isWalking)
+        {
+            stateManager.ChangeState(stateManager.playerState_Walk);
         }
         else if (playerMovement.isIdling)
         {
             stateManager.ChangeState(stateManager.playerState_Idle);
         }
-        else if (playerMovement.isWalking)
-        {
-            stateManager.ChangeState(stateManager.playerState_Walk);
-        }
+
     }
 
     public void SetStaffCanAttack()

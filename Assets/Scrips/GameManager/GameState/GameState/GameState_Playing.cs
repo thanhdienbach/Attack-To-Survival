@@ -15,18 +15,16 @@ public class GameState_Playing : IState
 
     public void OnEnter()
     {
-        Debug.Log("Game playing: Enter");
         GameManager.instance.spawnEnemyManager.SpawnWild();
     }
     public void OnUpdate()
     {
-        Debug.Log("Game playing: Update");
         GameManager.instance.inputManager.ListenInput();
         Player.instance.ListenAction();
     }
     public void OnExit()
     {
-        Debug.Log("Game playing: Exit");
+        
     }
 
 }

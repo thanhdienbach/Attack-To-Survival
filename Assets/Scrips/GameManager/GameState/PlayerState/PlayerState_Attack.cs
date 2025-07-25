@@ -6,6 +6,7 @@ public class PlayerState_Attack : IState
 {
     
     private MyStateMachine stateMachine;
+    [SerializeField] bool isFirstTime = true;
 
     public PlayerState_Attack(MyStateMachine _stateMachine)
     {
@@ -14,14 +15,23 @@ public class PlayerState_Attack : IState
 
     public void OnEnter()
     {
+        Player.instance.animationControl.EnqueueAttack();
 
     }
     public void OnUpdate()
     {
-        Player.instance.animationControl.EnqueueAttack();
+        if (!isFirstTime)
+        {
+            Player.instance.animationControl.EnqueueAttack();
+        }
+        else
+        {
+            isFirstTime = false;
+        }
+        
     }
     public void OnExit()
     {
-
+        isFirstTime = true;
     }
 }

@@ -48,13 +48,11 @@ public class WildHealthBar : MonoBehaviour
         {
             if (hitLayerOfCamera == HitLayerOfCamera.Player)
             {
-                Debug.Log("Player");
                 gameObject.SetActive(true);
                 SetAlpha(0.4f);
             }
             else if (hitLayerOfCamera == HitLayerOfCamera.Wild)
             {
-                Debug.Log("Wild");
                 gameObject.SetActive(true);
                 SetAlpha(1.0f);
             }
@@ -89,7 +87,6 @@ public class WildHealthBar : MonoBehaviour
     }
     void SetAlpha(float alpha)
     {
-        Debug.Log("Set Alpha");
         SetImageAlpha(backgroundImage, alpha);
         SetImageAlpha(fillImage, alpha);
     }
